@@ -4,7 +4,8 @@ import { useGlobalContext } from "./context/global";
 import styled from "styled-components";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import VideoPlayer from "./Components/VideoPlayer";
-import { Upload } from "./Components/Upload";
+import Upload from "./Components/Upload";
+import Button from "./Components/Button";
 
 function App() {
   const [modal, setModal] = useState(false);
@@ -13,7 +14,13 @@ function App() {
     <BrowserRouter>
       <AppStyled className="App">
         <div className="upload">
-          <button onClick={() => setModal(true)}>Upload</button>
+          <Button
+            name="Upload"
+            onClick={() => {
+              setModal(true);
+            }}
+            bg="#1e90ff"
+          />
         </div>
         {modal && <Upload />}
         <h1>Video Uploader</h1>
