@@ -6,7 +6,7 @@ const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     if (file.fieldname === "video") {
       const rootDir = path.dirname(require.main.filename);
-      cb(null, path.join(rootDir, "public").concat("videos"));
+      cb(null, path.join(rootDir, "public/").concat("videos"));
     }
   },
   filename: (req, file, cb) => {
