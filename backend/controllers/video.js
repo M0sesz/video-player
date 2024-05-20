@@ -2,7 +2,7 @@ const VideoSchema = require("../models/videoModel");
 
 exports.addVideo = async (req, res) => {
   const { title, description } = req.body;
-  const videoPath = req.file.path;
+  const videoPath = req.file.path.replace(/\\/g, "/");
 
   console.log(req.file);
 
@@ -10,7 +10,7 @@ exports.addVideo = async (req, res) => {
     title,
     description,
     filename: req.file.filename,
-    videoUrl: videoPath,
+    videoUrl: `/public/videos/${req.file.filename}`,
   });
 
   try {

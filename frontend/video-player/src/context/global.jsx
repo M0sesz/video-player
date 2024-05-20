@@ -19,7 +19,7 @@ const reducer = (state, action) => {
           ...action.payload.map((video) => {
             return {
               ...video,
-              videoUrl: `http://localhost:8000/public/videos/video/${video.filename}`,
+              videoUrl: `http://localhost:8000/public/videos/${video.filename}`,
             };
           }),
         ],

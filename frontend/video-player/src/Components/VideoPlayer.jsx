@@ -1,11 +1,12 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { useGlobalContext } from "../context/global";
 import VideoJS from "./Video";
 import videojs from "video.js";
-
+import { FaLongArrowAltLeft } from "react-icons/fa";
 import "videojs-contrib-quality-levels";
+import "videojs-playbackrate-adjuster"; // Імпорт плагіну
 
 function VideoPlayer() {
   const { id } = useParams();
@@ -13,14 +14,16 @@ function VideoPlayer() {
   const video = videos.find((vid) => {
     return vid._id === id;
   });
-  //refs
+
   const videoConRef = useRef(null);
-  const playerRef = React.useRef(null);
+  const playerRef = useRef(null);
 
   const handlePlayerReady = (player) => {
     playerRef.current = player;
 
-    // You can handle player events here, for example:
+    // Додаткове налаштування плагіну для швидкості відтворення
+    player.controlBar.addChild("PlaybackRateMenuButton", {}, 0);
+
     player.on("waiting", () => {
       videojs.log("player is waiting");
     });
@@ -30,7 +33,6 @@ function VideoPlayer() {
     });
   };
 
-  //video Options
   const videoOptions = {
     autoplay: false,
     controls: true,
@@ -66,7 +68,8 @@ function VideoPlayer() {
     <VideoPlayerStyled>
       <div className="back">
         <Link to={"/"}>
-          <i className="fas fa-arrow-left"></i>Back to Videos
+          <FaLongArrowAltLeft className="" />
+          Back to Videos
         </Link>
       </div>
       <div className="video-container" ref={videoConRef}>

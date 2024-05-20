@@ -4,18 +4,26 @@ import { useGlobalContext } from "./context/global";
 import styled from "styled-components";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import VideoPlayer from "./Components/VideoPlayer";
+import { Upload } from "./Components/Upload";
 
 function App() {
-  const g = useGlobalContext();
-  console.log(g);
+  const [modal, setModal] = useState(false);
+
   return (
     <BrowserRouter>
       <AppStyled className="App">
+        <div className="upload">
+          <button onClick={() => setModal(true)}>Upload</button>
+        </div>
+        {modal && <Upload />}
         <h1>Video Uploader</h1>
         <Routes>
           <Route path="/" element={<Videos />} />
           <Route path="/videos/:id" element={<VideoPlayer />} />
         </Routes>
+        {modal && (
+          <div className="overlay" onClick={() => setModal(false)}></div>
+        )}
       </AppStyled>
     </BrowserRouter>
   );
@@ -34,6 +42,18 @@ const AppStyled = styled.div`
     transform: translateX(-50%);
   }
 
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+  }
+  .upload {
+    display: flex;
+    justify-content: flex-start;
+  }
   .overlay {
     position: fixed;
     top: 0;
